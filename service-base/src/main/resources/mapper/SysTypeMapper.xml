@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.liugui.servicebase.mapper.SysTypeMapper">
+    <resultMap id="BaseMap" type="com.liugui.servicebase.model.SysType">
+        <id property="typeId" jdbcType="INTEGER" column="type_id"/>
+        <result property="typeClass" jdbcType="VARCHAR" column="type_class"/>
+        <result property="typeName" jdbcType="INTEGER" column="type_name"/>
+        <result property="typePath" jdbcType="INTEGER" column="type_path"/>
+        <result property="state" jdbcType="INTEGER" column="state"/>
+        <result property="comment" jdbcType="INTEGER" column="comment"/>
+    </resultMap>
+
+    <sql id="Base_Sql">
+    type_id ,type_class , type_name, type_path,state,comment
+    </sql>
+
+    <sql id="Base_isNull_Sql">
+        <if test="typeId != null and typeId != '' " >and type_id = #{typeId}</if>
+        <if test="typeClass != null and typeClass != '' " >and type_class = #{typeClass}</if>
+        <if test="typeName != null and typeName != '' " >and type_name = #{ypeName}</if>
+        <if test="typePath != null and typePath != '' " >and type_path = #{typePath}</if>
+        <if test="state != null  " >and state = #{state}</if>
+        <if test="comment != null and comment != '' " >and comment = #{comment}</if>
+    </sql>
+
+    <sql id="Base_update_Sql">
+        <if test="typeId != null and typeId != '' " > type_id = #{typeId},</if>
+        <if test="typeClass != null and typeClass != '' " > type_class = #{typeClass},</if>
+        <if test="typeName != null and typeName != '' " > type_name = #{ypeName},</if>
+        <if test="typePath != null and typePath != '' " > type_path = #{typePath},</if>
+        <if test="state != null and state != '' " > state = #{state},</if>
+        <if test="comment != null and comment != '' " > comment = #{comment},</if>
+    </sql>
+
+    <sql id="Base_add_Sql">
+        <if test="typeId != null and typeId != '' " >type_id,</if>
+        <if test="typeClass != null and typeClass != '' " >type_class ,</if>
+        <if test="typeName != null and typeName != '' " >type_name ,</if>
+        <if test="typePath != null and typePath != '' " >type_path ,</if>
+        <if test="state != null and state != '' " > state ,</if>
+        <if test="comment != null and comment != '' " > comment,</if>
+    </sql>
+
+    <sql id="Base_add2_Sql">
+        <if test="typeId != null and typeId != '' " >#{typeId},</if>
+        <if test="typeClass != null and typeClass != '' " >#{typeClass} ,</if>
+        <if test="typeName != null and typeName != '' " >#{typeName} ,</if>
+        <if test="typePath != null and typePath != '' " >#{typePath} ,</if>
+        <if test="state != null and state != '' " > #{state} ,</if>
+        <if test="comment != null and comment != '' " > #{comment},</if>
+    </sql>
+
+    <select id="selectByMaps" parameterType="java.util.Map" resultMap="BaseMap">
+        select
+        <include refid="Base_Sql"/>
+        from sys_type
+        <trim prefix="where" prefixOverrides="and | or" >
+           <include refid="Base_isNull_Sql"/>
+        </trim>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from sys_type where type_id = #{id}
+    </delete>
+
+    <insert id="insert" parameterType="com.liugui.servicebase.model.SysType">
+        insert  into sys_type
+       <trim prefix="(" suffix=")" suffixOverrides=",">
+           <include refid="Base_add_Sql"/>
+       </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <include refid="Base_add2_Sql"/>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="com.liugui.servicebase.model.SysType">
+        update sys_type
+        <set>
+            <include refid="Base_update_Sql"/>
+        </set>
+        where type_id = #{typeId,jdbcType=INTEGER}
+    </update>
+</mapper>
